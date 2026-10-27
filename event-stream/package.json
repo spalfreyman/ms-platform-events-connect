@@ -1,0 +1,17 @@
+{
+  "name": "ms-platform-events",
+  "version": "1.0.0",
+  "description": "commercetools Connect event app: subscribes to every message, change and event and forwards them to a live dashboard",
+  "type": "module",
+  "main": "build/src/index.js",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "build": "tsc",
+    "start": "node build/src/index.js",
+    "test": "tsc && node --test build/test/events.test.js",
+    "connect:post-deploy": "node build/src/post-deploy.js",
+    "connect:pre-undeploy": "node build/src/pre-undeploy.js"
+  },
+  "dependencies": { "express": "^4.21.0" },
+  "devDependencies": { "typescript": "^5.6.0", "@types/express": "^4.17.21", "@types/node": "^22.0.0" }
+}

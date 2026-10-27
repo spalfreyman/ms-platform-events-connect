@@ -1,0 +1,34 @@
+deployAs:
+  - name: event-stream
+    applicationType: event
+    endpoint: /event
+    scripts:
+      postDeploy: npm install && npm run build && npm run connect:post-deploy
+      preUndeploy: npm install && npm run build && npm run connect:pre-undeploy
+    configuration:
+      standardConfiguration:
+        - key: CTP_PROJECT_KEY
+          description: commercetools project key
+          required: true
+        - key: CTP_AUTH_URL
+          description: commercetools auth URL
+          required: true
+        - key: CTP_API_URL
+          description: commercetools API URL
+          required: true
+        - key: INGEST_URL
+          description: HTTPS endpoint of the dashboard that receives each event
+          required: true
+      securedConfiguration:
+        - key: CTP_CLIENT_ID
+          description: API client id (scope manage_subscriptions)
+          required: true
+        - key: CTP_CLIENT_SECRET
+          description: API client secret
+          required: true
+        - key: CTP_SCOPES
+          description: Scopes of the API client
+          required: true
+        - key: INGEST_SECRET
+          description: Value sent in the Authorization header to the ingest endpoint
+          required: true
