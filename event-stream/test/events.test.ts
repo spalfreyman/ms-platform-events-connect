@@ -26,6 +26,13 @@ test('Sparks: spend-to-earn completes and is idempotent per order', () => {
   assert.equal(r1.pendingAdd, 1000); assert.equal(r1.state.activated['fhb-10-40'].done, true);
   const r2 = applySpend(r1.state, { fhb: 2000, flowers: 0 }, 'o1'); assert.equal(r2.duplicate, true); assert.equal(r2.pendingAdd, 0);
 });
+test('Sparks: an Irish order progresses the euro offer and pays a euro reward', () => {
+  const state: any = { activated: { 'fhb-10-40': { progress: 2500, done: false, expires: '2099-01-01' } } };
+  const r1 = applySpend(state, { fhb: 4000, flowers: 0 }, 'ie1', Date.now(), 'EUR');
+  assert.equal(r1.pendingAdd, 0); assert.equal(r1.state.activated['fhb-10-40'].progress.GBP, 2500); assert.equal(r1.state.activated['fhb-10-40'].progress.EUR, 4000);
+  const r2 = applySpend(r1.state, { fhb: 1000, flowers: 0 }, 'ie2', Date.now(), 'EUR');
+  assert.equal(r2.pendingAdd, 1200); assert.equal(r2.state.pending[0].currency, 'EUR');
+});
 test('Sparks: alcohol and gifts do not count', () => {
   const o = { lineItems: [{ productId: 'a', totalPrice: { centAmount: 3000 }, variant: { attributes: [{ name: 'ageRestriction', value: { key: '18' } }] } }, { productId: 'b', lineItemMode: 'GiftLineItem', totalPrice: { centAmount: 0 } }, { productId: 'c', totalPrice: { centAmount: 1500 } }] };
   assert.deepEqual(spendByBucket(o, { c: 'Women' }), { fhb: 1500, flowers: 0 });
