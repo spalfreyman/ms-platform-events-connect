@@ -19,6 +19,9 @@ deployAs:
         - key: INGEST_URL
           description: HTTPS endpoint of the dashboard that receives each event
           required: true
+        - key: OMS_URL
+          description: Order management endpoint that receives OrderCreated hand-offs
+          required: false
       securedConfiguration:
         - key: CTP_CLIENT_ID
           description: API client id (scope manage_subscriptions)
@@ -31,4 +34,39 @@ deployAs:
           required: true
         - key: INGEST_SECRET
           description: Value sent in the Authorization header to the ingest endpoint
+          required: true
+        - key: OMS_SECRET
+          description: Authorization header value for the OMS endpoint
+          required: false
+  - name: promo-lifecycle
+    applicationType: job
+    endpoint: /job
+    properties:
+      schedule: "*/5 * * * *"
+    configuration:
+      standardConfiguration:
+        - key: CTP_PROJECT_KEY
+          description: commercetools project key
+          required: true
+        - key: CTP_AUTH_URL
+          description: commercetools auth URL
+          required: true
+        - key: CTP_API_URL
+          description: commercetools API URL
+          required: true
+        - key: INGEST_URL
+          description: Dashboard ingest endpoint that receives promotion lifecycle events
+          required: true
+      securedConfiguration:
+        - key: CTP_CLIENT_ID
+          description: API client id (view discounts, manage key-value documents)
+          required: true
+        - key: CTP_CLIENT_SECRET
+          description: API client secret
+          required: true
+        - key: CTP_SCOPES
+          description: Scopes of the API client
+          required: true
+        - key: INGEST_SECRET
+          description: Authorization header value for the ingest endpoint
           required: true

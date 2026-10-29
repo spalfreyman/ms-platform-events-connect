@@ -1,0 +1,11 @@
+{
+  "name": "ms-promo-lifecycle",
+  "version": "1.0.0",
+  "description": "commercetools Connect job: emits PromotionStarted / PromotionEnded events when discounts reach their validFrom / validUntil",
+  "type": "module",
+  "main": "build/src/index.js",
+  "engines": { "node": ">=20" },
+  "scripts": { "build": "tsc", "start": "node build/src/index.js", "test": "tsc && node --test build/test/lifecycle.test.js" },
+  "dependencies": { "express": "^4.21.0" },
+  "devDependencies": { "typescript": "^5.6.0", "@types/express": "^4.17.21", "@types/node": "^22.0.0" }
+}
